@@ -37,11 +37,11 @@ function App() {
     const [showCreateModal, setShowCreateModal] = useState(false)
     const [showCreateMangaModal, setShowCreateMangaModal] = useState(false)
     const [showCreateComicModal, setShowCreateComicModal] = useState(false)
-    
+
     const [showEditModal, setShowEditModal] = useState(false)
     const [showEditMangaModal, setShowEditMangaModal] = useState(false)
     const [showEditComicModal, setShowEditComicModal] = useState(false)
-    
+
     const [showDeleteModal, setShowDeleteModal] = useState(false)
 
     const [selectedBook, setSelectedBook] = useState(null)
@@ -273,7 +273,7 @@ function App() {
 
     const handleDelete = async () => {
         let deleteUrl = ''
-        
+
         if (selectedBook) {
             deleteUrl = `http://localhost:8000/api/libros/${selectedBook.id}`
         } else if (selectedManga) {
@@ -368,7 +368,7 @@ function App() {
 
     return (
         <div className="app">
-            {location.pathname !== '/nuestra-historia' && (
+            {location.pathname !== '/nuestra-historia' && location.pathname !== '/perfil' && location.pathname !== '/configuracion' && (
                 <Header
                     isScrolled={isScrolled}
                     isMobileMenuOpen={isMobileMenuOpen}
@@ -417,7 +417,7 @@ function App() {
                             />
 
                             <BookRow
-                                title="Cómicos populares"
+                                title="Comics populares"
                                 Books={comics.popular}
                                 autoPlay
                                 autoPlayInterval={4000}

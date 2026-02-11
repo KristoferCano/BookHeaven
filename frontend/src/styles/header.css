@@ -193,16 +193,17 @@
     position: absolute;
     top: 100%;
     right: 0;
-    margin-top: 10px;
-    background: linear-gradient(135deg, #FFFFFF 0%, #F5F0EB 100%);
-    border: 1px solid rgba(245, 240, 235, 0.8);
+    margin-top: 12px;
+    background: linear-gradient(135deg, rgba(30, 25, 20, 0.99) 0%, rgba(20, 20, 20, 0.99) 100%);
+    border: 1px solid rgba(212, 167, 106, 0.3);
     border-radius: 16px;
     min-width: 280px;
-    box-shadow: 0 16px 48px rgba(101, 67, 33, 0.2),
-                0 0 1px rgba(101, 67, 33, 0.1);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6),
+        0 0 0 1px rgba(212, 167, 106, 0.1);
     overflow: hidden;
-    animation: slideInProfile 0.3s ease-out;
+    animation: slideInProfile 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 1001;
+    backdrop-filter: blur(12px);
 }
 
 @keyframes slideInProfile {
@@ -210,6 +211,7 @@
         opacity: 0;
         transform: translateY(-10px) scale(0.95);
     }
+
     to {
         opacity: 1;
         transform: translateY(0) scale(1);
@@ -217,27 +219,29 @@
 }
 
 .profile-menu__header {
-    padding: 16px 20px;
-    background: linear-gradient(135deg, #F5F0EB 0%, #EEE7DC 100%);
+    padding: 20px;
+    background: linear-gradient(135deg, rgba(166, 124, 82, 0.15) 0%, rgba(125, 90, 58, 0.1) 100%);
+    border-bottom: 1px solid rgba(212, 167, 106, 0.1);
 }
 
 .profile-menu__name {
-    color: #654321;
-    font-size: 15px;
+    color: #FFFBF5;
+    font-size: 16px;
     font-weight: 600;
     margin: 0 0 4px 0;
+    letter-spacing: 0.3px;
 }
 
 .profile-menu__email {
-    color: #8B6F47;
-    font-size: 12px;
+    color: #D4A76A;
+    font-size: 13px;
     margin: 0;
-    opacity: 0.8;
+    opacity: 0.9;
 }
 
 .profile-menu__divider {
     height: 1px;
-    background: linear-gradient(90deg, transparent, #D4C4B0, transparent);
+    background: linear-gradient(90deg, transparent, rgba(212, 167, 106, 0.2), transparent);
 }
 
 .profile-menu__item {
@@ -245,33 +249,35 @@
     align-items: center;
     gap: 12px;
     width: 100%;
-    padding: 12px 20px;
+    padding: 14px 20px;
     background: none;
     border: none;
-    color: #654321;
+    color: #E8DCC8;
     font-size: 14px;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
     text-align: left;
 }
 
 .profile-menu__item:hover {
-    background-color: rgba(160, 130, 109, 0.1);
-    padding-left: 24px;
-    color: #8B6F47;
+    background-color: rgba(212, 167, 106, 0.1);
+    padding-left: 28px;
+    color: #FFFBF5;
+    text-shadow: 0 0 8px rgba(212, 167, 106, 0.3);
 }
 
 .profile-menu__item svg {
     width: 18px;
     height: 18px;
     opacity: 0.7;
-    transition: opacity 0.2s ease;
+    transition: all 0.3s ease;
 }
 
 .profile-menu__item:hover svg {
     opacity: 1;
-    color: #8B6F47;
+    color: #D4A76A;
+    transform: scale(1.1);
 }
 
 .profile-menu__logout {
@@ -279,31 +285,33 @@
     align-items: center;
     gap: 12px;
     width: 100%;
-    padding: 12px 20px;
+    padding: 14px 20px;
     background: none;
     border: none;
-    color: #DC6464;
+    color: #E87A7A;
     font-size: 14px;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
     text-align: left;
 }
 
 .profile-menu__logout:hover {
-    background-color: rgba(220, 100, 100, 0.1);
-    padding-left: 24px;
+    background-color: rgba(232, 122, 122, 0.1);
+    padding-left: 28px;
+    color: #FF8F8F;
 }
 
 .profile-menu__logout svg {
     width: 18px;
     height: 18px;
     opacity: 0.7;
-    transition: opacity 0.2s ease;
+    transition: all 0.3s ease;
 }
 
 .profile-menu__logout:hover svg {
     opacity: 1;
+    transform: translateX(3px);
 }
 
 /* =========================
@@ -369,6 +377,7 @@
         opacity: 0;
         transform: translateY(-20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -397,16 +406,16 @@
     .header__nav {
         display: none;
     }
-    
+
     .header__mobile-menu {
         display: flex;
     }
-    
+
     .header__search,
     .header__notifications {
         display: none;
     }
-    
+
     .header__content {
         padding: 18px 4%;
     }
@@ -430,7 +439,7 @@
         width: 85px;
         height: 25px;
     }
-    
+
     .header__profile img {
         width: 32px;
         height: 32px;

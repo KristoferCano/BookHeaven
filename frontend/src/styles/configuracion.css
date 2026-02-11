@@ -1,69 +1,541 @@
-/* Estilos para Configuración */
+/* ============================================================
+   BOOKHEAVEN - CONFIGURATION DESIGN (PREMIUM SaaS STYLE)
+   ============================================================ */
+
+:root {
+  --config-bg: #0d0d0d;
+  --config-card: #161616;
+  --config-accent: #D4A76A;
+  /* Sincronizado con globals.css */
+  --config-accent-hover: #E8A84B;
+  --config-accent-glow: rgba(212, 167, 106, 0.4);
+  --config-text-main: #E8DCC8;
+  /* Beige global */
+  --config-text-muted: #a0a0a0;
+  --config-border: rgba(212, 167, 106, 0.15);
+  --config-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+  --config-transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
 
 .config-wrapper {
-  min-height: 80vh;
-  padding: 32px 20px;
-  background: linear-gradient(180deg, #0f0f0f 0%, #161412 100%);
-  color: #fff;
+  min-height: 100vh;
+  background-color: var(--config-bg);
+  color: var(--config-text-main);
+  padding-bottom: 80px;
+  font-family: inherit;
 }
 
-.config-container {
-  max-width: 900px;
+/* Header Config */
+.config-header {
+  background: rgba(13, 13, 13, 0.95);
+  backdrop-filter: blur(15px);
+  border-bottom: 2px solid var(--config-border);
+  padding: 1.2rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 2000;
+}
+
+.config-header__container {
+  max-width: 1200px;
   margin: 0 auto;
-}
-
-.config-tabs {
+  padding: 0 2rem;
   display: flex;
-  gap: 8px;
-  margin: 12px 0 18px 0;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.config-tabs button {
-  background: transparent;
-  color: #ddd;
-  border: 1px solid rgba(255,255,255,0.03);
-  padding: 8px 12px;
-  border-radius: 8px;
+.config-back-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--config-text-main);
+  background: rgba(212, 167, 106, 0.1);
+  padding: 8px 18px;
+  border-radius: 30px;
+  border: 1px solid var(--config-border);
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: var(--config-transition);
   cursor: pointer;
 }
 
-.config-tabs button.active {
-  background: linear-gradient(135deg,#D4A76A,#A6764F);
-  color: #111;
-  border: none;
+.config-back-button:hover {
+  background: var(--config-accent);
+  color: #000;
+  transform: translateX(-5px);
+  box-shadow: 0 0 20px var(--config-accent-glow);
 }
 
-.config-panel {
-  background: #141414;
-  padding: 16px;
-  border-radius: 10px;
-  border: 1px solid rgba(212,167,106,0.06);
+.config-logo {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--config-accent);
+  letter-spacing: 2px;
 }
 
-.config-panel label {
-  display: block;
-  margin-top: 12px;
-  color: #cfc6b8;
+/* Layout */
+.config-layout {
+  max-width: 1100px;
+  margin: 3rem auto;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 3rem;
+  padding: 0 2rem;
 }
 
-.config-panel input, .config-panel select {
-  width: 100%;
-  padding: 10px;
-  margin-top: 6px;
-  border-radius: 6px;
-  background: #0f0f0f;
+/* Sidebar Navigation */
+.config-sidebar {
+  position: sticky;
+  top: 100px;
+  height: fit-content;
+}
+
+.config-sidebar h2 {
+  font-size: 2.2rem;
+  margin-bottom: 2rem;
+  font-weight: 700;
   color: #fff;
-  border: 1px solid #222;
+  letter-spacing: -0.5px;
 }
 
-.config-actions { margin-top: 16px }
+.config-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
 
-.config-msg {
-  margin: 12px 0;
-  padding: 10px 12px;
-  background: rgba(212,167,106,0.12);
-  color: #E8DCC8;
+.config-nav-item {
+  padding: 1.1rem 1.5rem;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--config-text-muted);
+  font-weight: 600;
+  text-align: left;
+  transition: var(--config-transition);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: none;
+  cursor: pointer;
+}
+
+.config-nav-item svg {
+  width: 20px;
+  height: 20px;
+  stroke-width: 2px;
+}
+
+.config-nav-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--config-text-main);
+}
+
+.config-nav-item.active {
+  background: rgba(212, 167, 106, 0.1);
+  color: var(--config-accent);
+  border-left: 4px solid var(--config-accent);
+}
+
+/* Content Area */
+.config-content {
+  animation: configFadeIn 0.5s ease-out;
+}
+
+@keyframes configFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.config-section-card {
+  background: var(--config-card);
+  border-radius: 24px;
+  border: 1px solid var(--config-border);
+  padding: 3rem;
+  box-shadow: var(--config-shadow);
+  margin-bottom: 2rem;
+}
+
+.config-section-card h3 {
+  font-size: 1.6rem;
+  margin-bottom: 2.5rem;
+  color: var(--config-accent);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Form Styles */
+.config-form-group {
+  margin-bottom: 2rem;
+}
+
+.config-form-group label {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--config-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.config-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.config-input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1.1rem 1.4rem;
+  border-radius: 14px;
+  color: #fff;
+  font-size: 1rem;
+  transition: var(--config-transition);
+  outline: none;
+}
+
+.config-input:focus {
+  border-color: var(--config-accent);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 20px rgba(212, 167, 106, 0.15);
+}
+
+.config-input option {
+  background-color: #E8D8C3;
+  color: #000000;
+}
+
+.config-password-toggle {
+  position: absolute;
+  right: 1.4rem;
+  color: var(--config-accent);
+  font-weight: 700;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 5px;
+  transition: var(--config-transition);
+}
+
+.config-password-toggle:hover {
+  color: var(--config-accent-hover);
+  transform: scale(1.05);
+}
+
+/* Avatar Management */
+.config-avatar-section {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  margin-bottom: 3rem;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 20px;
+  border: 1px dashed var(--config-border);
+}
+
+.config-avatar-preview {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid var(--config-accent);
+  box-shadow: 0 0 25px rgba(212, 167, 106, 0.3);
+}
+
+.config-avatar-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.config-btn-upload {
+  background: var(--config-accent);
+  color: #000;
+  padding: 0.75rem 1.5rem;
+  border-radius: 10px;
+  font-weight: 800;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: var(--config-transition);
+  display: inline-block;
+  text-align: center;
+}
+
+.config-btn-upload:hover {
+  background: var(--config-accent-hover);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(212, 167, 106, 0.4);
+}
+
+.config-btn-delete {
+  color: #e74c3c;
+  font-weight: 700;
+  font-size: 0.9rem;
+  background: rgba(231, 76, 60, 0.1);
+  border: 1px solid rgba(231, 76, 60, 0.2);
+  padding: 0.5rem 1rem;
   border-radius: 8px;
+  cursor: pointer;
+  transition: var(--config-transition);
 }
 
-.help { color: #bfbfbf; font-size: 13px }
+.config-btn-delete:hover {
+  background: #e74c3c;
+  color: #fff;
+}
+
+/* Toggles & Switches */
+.config-toggle-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 18px;
+  margin-bottom: 1.2rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: var(--config-transition);
+}
+
+.config-toggle-item:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(212, 167, 106, 0.2);
+}
+
+.config-toggle-info p:first-child {
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 0.3rem;
+}
+
+.config-toggle-info p:last-child {
+  font-size: 0.85rem;
+  color: var(--config-text-muted);
+}
+
+/* Premium Switch Button */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 54px;
+  height: 28px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #333;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+input:checked+.slider {
+  background-color: var(--config-accent);
+}
+
+input:checked+.slider:before {
+  transform: translateX(26px);
+}
+
+/* Multi-selector Tags */
+.genre-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.genre-tag {
+  padding: 0.6rem 1.2rem;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--config-transition);
+  color: var(--config-text-muted);
+}
+
+.genre-tag:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--config-accent);
+  color: #fff;
+}
+
+.genre-tag.selected {
+  background: var(--config-accent);
+  border-color: var(--config-accent);
+  color: #000;
+  box-shadow: 0 0 15px rgba(212, 167, 106, 0.3);
+}
+
+/* Subscription Card */
+.plan-card {
+  background: linear-gradient(135deg, rgba(212, 167, 106, 0.15) 0%, rgba(22, 22, 22, 1) 100%);
+  padding: 2.5rem;
+  border-radius: 20px;
+  border: 1px solid var(--config-accent);
+  margin-bottom: 2.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.plan-card::after {
+  content: 'PREMIUM';
+  position: absolute;
+  top: 20px;
+  right: -30px;
+  background: var(--config-accent);
+  color: #000;
+  padding: 5px 40px;
+  transform: rotate(45deg);
+  font-size: 0.7rem;
+  font-weight: 900;
+}
+
+.plan-info h4 {
+  font-size: 2.2rem;
+  color: var(--config-accent);
+  margin-bottom: 0.5rem;
+  font-weight: 800;
+}
+
+.plan-date {
+  font-size: 1rem;
+  color: var(--config-text-muted);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Save Buttons */
+.config-save-btn {
+  width: 100%;
+  padding: 1.3rem;
+  background: var(--config-accent);
+  color: #000;
+  border-radius: 14px;
+  font-weight: 800;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-top: 1rem;
+  border: none;
+  cursor: pointer;
+  transition: var(--config-transition);
+}
+
+.config-save-btn:hover {
+  background: var(--config-accent-hover);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(212, 167, 106, 0.5);
+}
+
+.config-danger-btn {
+  width: 100%;
+  padding: 1.1rem;
+  background: transparent;
+  border: 1px solid #e74c3c;
+  color: #e74c3c;
+  border-radius: 14px;
+  font-weight: 700;
+  font-size: 1rem;
+  margin-top: 1.5rem;
+  cursor: pointer;
+  transition: var(--config-transition);
+}
+
+.config-danger-btn:hover {
+  background: #e74c3c;
+  color: #fff;
+  box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .config-layout {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .config-sidebar {
+    position: static;
+  }
+
+  .config-nav {
+    flex-direction: row;
+    overflow-x: auto;
+    padding-bottom: 1.5rem;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .config-nav-item {
+    white-space: nowrap;
+    padding: 0.9rem 1.4rem;
+    border-left: none;
+    border-bottom: 3px solid transparent;
+  }
+
+  .config-nav-item.active {
+    background: rgba(212, 167, 106, 0.1);
+    border-bottom-color: var(--config-accent);
+  }
+}
+
+@media (max-width: 600px) {
+  .config-section-card {
+    padding: 2rem 1.5rem;
+  }
+
+  .config-avatar-section {
+    flex-direction: column;
+    text-align: center;
+    gap: 1.5rem;
+  }
+
+  .config-header__container {
+    padding: 0 1rem;
+  }
+
+  .config-logo {
+    font-size: 1.4rem;
+  }
+}
