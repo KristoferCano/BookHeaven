@@ -64,41 +64,44 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 /* =================================
-   RUTAS PÚBLICAS (SIN LOGIN)
+   RUTAS PÚBLICAS - LECTURA (SIN LOGIN)
 ================================= */
 
-// 👀 VER LIBROS (PUBLICO)
+// 📚 LIBROS (Lectura pública)
 Route::get('/libros', [LibroController::class, 'index']);
 Route::get('/libros/{libro}', [LibroController::class, 'show']);
 
+// 📖 MANGAS (Lectura pública)
+Route::get('/mangas', [MangaController::class, 'index']);
+Route::get('/mangas/{manga}', [MangaController::class, 'show']);
+
+// 💬 CÓMICS (Lectura pública)
+Route::get('/comics', [ComicController::class, 'index']);
+Route::get('/comics/{comic}', [ComicController::class, 'show']);
+
 /* =================================
-   RUTAS PROTEGIDAS (LOGIN REQUERIDO)
+   RUTAS PROTEGIDAS - ADMIN (EDICIÓN)
 ================================= */
 
 Route::middleware('auth:sanctum')->group(function () {
 
-    /* ========= ADMIN ========= */
+    /* ========= ADMIN - CRUD COMPLETO ========= */
     Route::middleware('role:admin')->group(function () {
 
-        // 📘 LIBROS (CRUD TOTAL)
+        // 📘 LIBROS (CRUD)
         Route::post('/libros', [LibroController::class, 'store']);
         Route::put('/libros/{libro}', [LibroController::class, 'update']);
         Route::delete('/libros/{libro}', [LibroController::class, 'destroy']);
 
-        // 📚 COMICS
-        Route::apiResource('comics', ComicController::class);
+        // 📖 MANGAS (CRUD)
+        Route::post('/mangas', [MangaController::class, 'store']);
+        Route::put('/mangas/{manga}', [MangaController::class, 'update']);
+        Route::delete('/mangas/{manga}', [MangaController::class, 'destroy']);
 
-        // 📖 MANGAS
-        Route::apiResource('mangas', MangaController::class);
-    });
-
-    /* ========= PREMIUM (LECTURA) ========= */
-    Route::middleware('role:admin,premium')->group(function () {
-        Route::get('/comics', [ComicController::class, 'index']);
-        Route::get('/comics/{comic}', [ComicController::class, 'show']);
-
-        Route::get('/mangas', [MangaController::class, 'index']);
-        Route::get('/mangas/{manga}', [MangaController::class, 'show']);
+        // 💬 COMICS (CRUD)
+        Route::post('/comics', [ComicController::class, 'store']);
+        Route::put('/comics/{comic}', [ComicController::class, 'update']);
+        Route::delete('/comics/{comic}', [ComicController::class, 'destroy']);
     });
 
 });
