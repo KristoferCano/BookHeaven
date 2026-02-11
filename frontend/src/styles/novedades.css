@@ -1,0 +1,174 @@
+/* Estilos para Novedades Populares */
+
+.novedades-wrapper {
+  min-height: 80vh;
+  padding: 32px 20px;
+  background: linear-gradient(180deg, #0f0f0f 0%, #161412 100%);
+  color: #fff;
+}
+
+.novedades-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.novedades-container h2 {
+  color: #D4A76A;
+  font-family: 'Georgia', serif;
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  color: #cfc6b8;
+  margin-bottom: 24px;
+  font-size: 14px;
+}
+
+.novedades-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  border-bottom: 2px solid rgba(212,167,106,0.1);
+  padding-bottom: 12px;
+}
+
+.novedades-tabs button {
+  background: transparent;
+  color: #bfbfbf;
+  border: none;
+  padding: 10px 16px;
+  cursor: pointer;
+  font-size: 15px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.novedades-tabs button:hover {
+  color: #E8DCC8;
+}
+
+.novedades-tabs button.active {
+  color: #D4A76A;
+}
+
+.novedades-tabs button.active::after {
+  content: '';
+  position: absolute;
+  bottom: -14px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #D4A76A, #A6764F);
+}
+
+.novedades-content {
+  margin-top: 12px;
+}
+
+.novedades-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 16px;
+}
+
+.novedades-card {
+  background: rgba(255,255,255,0.02);
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(212,167,106,0.08);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.novedades-card:hover {
+  background: rgba(255,255,255,0.05);
+  border-color: rgba(212,167,106,0.2);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(212,167,106,0.1);
+}
+
+.novedades-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.card-info {
+  padding: 10px;
+}
+
+.card-info h4 {
+  margin: 0 0 4px 0;
+  color: #E8DCC8;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.card-info .tipo {
+  margin: 0 0 6px 0;
+  color: #D4A76A;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.card-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.match {
+  font-size: 11px;
+  color: #999;
+  background: rgba(212,167,106,0.1);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: #bfbfbf;
+  padding: 40px;
+}
+
+@media (max-width: 1024px) {
+  .novedades-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .novedades-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 12px;
+  }
+
+  .novedades-container h2 {
+    font-size: 24px;
+  }
+
+  .novedades-tabs {
+    gap: 4px;
+  }
+
+  .novedades-tabs button {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .novedades-grid {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  }
+
+  .novedades-card img {
+    height: 140px;
+  }
+
+  .card-info h4 {
+    font-size: 12px;
+  }
+}

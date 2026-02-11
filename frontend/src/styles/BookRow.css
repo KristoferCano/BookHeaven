@@ -1,0 +1,709 @@
+/* =========================
+   BOOK ROW CONTAINER
+========================= */
+
+.bookRow {
+    margin-bottom: 60px;
+    position: relative;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.bookRow__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding: 0 4%;
+}
+
+.bookRow__title {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #FFFBF5;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
+    font-family: 'Georgia', serif;
+    letter-spacing: 0.5px;
+}
+
+.bookRow__controls {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.bookRow__control-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(166, 124, 82, 0.3) 0%, rgba(139, 111, 71, 0.3) 100%);
+    color: #D4A76A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 2px solid rgba(212, 167, 106, 0.3);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.bookRow__control-btn:hover {
+    background: linear-gradient(135deg, rgba(212, 167, 106, 0.4) 0%, rgba(196, 180, 159, 0.4) 100%);
+    transform: scale(1.12);
+    border-color: rgba(212, 167, 106, 0.5);
+    box-shadow: 0 4px 12px rgba(212, 167, 106, 0.3);
+}
+
+.bookRow__control-btn.active {
+    background: linear-gradient(135deg, #D4A76A 0%, #E8A84B 100%);
+    border-color: #D4A76A;
+    color: #FFFBF5;
+    box-shadow: 0 4px 12px rgba(212, 167, 106, 0.5);
+}
+
+.bookRow__progress {
+    width: 110px;
+    height: 5px;
+    background-color: rgba(166, 124, 82, 0.3);
+    border-radius: 3px;
+    overflow: hidden;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.bookRow__progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #D4A76A 0%, #E8A84B 100%);
+    transition: width 0.3s ease;
+    border-radius: 3px;
+    box-shadow: 0 0 8px rgba(212, 167, 106, 0.5);
+}
+
+/* =========================
+   LIST AREA
+========================= */
+
+.bookRow__listarea {
+    position: relative;
+    overflow: hidden;
+    padding: 24px 0;
+}
+
+.bookRow__list {
+    display: flex;
+    gap: 14px;
+    padding: 0 4%;
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: transform;
+}
+
+.bookRow__list.dragging {
+    transition: none;
+    cursor: grabbing;
+}
+
+/* =========================
+   BOOK ITEMS
+========================= */
+
+.bookRow__item {
+    flex-shrink: 0;
+    cursor: pointer;
+    position: relative;
+    transform-origin: center;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), z-index 0.3s ease;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.bookRow__item:hover {
+    transform: scale(1.15) translateZ(0);
+    z-index: 10;
+    box-shadow: 0 8px 24px rgba(212, 167, 106, 0.3);
+}
+
+.bookRow__item-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #8B6F47 0%, #654321 100%);
+}
+
+/* Skeleton Loader */
+.bookRow__skeleton {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, #8B6F47 25%, #A67C52 50%, #8B6F47 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.8s infinite;
+}
+
+@keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+.bookRow__skeleton-shimmer {
+    width: 100%;
+    height: 100%;
+}
+
+.bookRow__item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.3s ease, filter 0.3s ease;
+    border-radius: 10px;
+}
+
+.bookRow__item:hover img {
+    filter: brightness(0.35) saturate(1.1);
+}
+
+/* =========================
+   HOVER OVERLAY
+========================= */
+
+.bookRow__item-hover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    transform: translateY(25px);
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 22px;
+    background: linear-gradient(
+        to bottom,
+        rgba(101, 67, 33, 0.95) 0%,
+        rgba(125, 90, 58, 0.98) 50%,
+        rgba(101, 67, 33, 1) 100%
+    );
+    border-radius: 10px;
+}
+
+.bookRow__item-hover.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.bookRow__item-preview {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+}
+
+.bookRow__item-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.4);
+}
+
+.bookRow__item-preview-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        to bottom,
+        rgba(101, 67, 33, 0.5) 0%,
+        rgba(101, 67, 33, 0.8) 100%
+    );
+}
+
+/* =========================
+   ITEM CONTENT
+========================= */
+
+.bookRow__item-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    height: 100%;
+}
+
+.bookRow__item-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: auto;
+}
+
+.bookRow__item-button {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(196, 180, 159, 0.25) 0%, rgba(166, 124, 82, 0.25) 100%);
+    color: #FFFBF5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 2px solid rgba(232, 220, 200, 0.3);
+}
+
+.bookRow__item-button:hover {
+    background: linear-gradient(135deg, rgba(232, 220, 200, 0.4) 0%, rgba(212, 167, 106, 0.4) 100%);
+    transform: scale(1.18);
+    border-color: rgba(232, 220, 200, 0.7);
+    box-shadow: 0 4px 16px rgba(212, 167, 106, 0.4);
+}
+
+.bookRow__item-button--primary {
+    background: linear-gradient(135deg, #D4A76A 0%, #E8A84B 100%);
+    color: #1A1A1A;
+    border-color: rgba(232, 220, 200, 0.5);
+}
+
+.bookRow__item-button--primary:hover {
+    background: linear-gradient(135deg, #E8A84B 0%, #F5B75E 100%);
+    box-shadow: 0 4px 16px rgba(232, 220, 200, 0.6);
+}
+
+/* Edit and Delete Buttons */
+.bookRow__item-button--edit {
+    background: linear-gradient(135deg, rgba(196, 180, 159, 0.35) 0%, rgba(166, 124, 82, 0.35) 100%);
+    border-color: rgba(196, 180, 159, 0.6);
+}
+
+.bookRow__item-button--edit:hover {
+    background: linear-gradient(135deg, rgba(196, 180, 159, 0.5) 0%, rgba(166, 124, 82, 0.5) 100%);
+    border-color: rgba(196, 180, 159, 0.9);
+    box-shadow: 0 4px 16px rgba(166, 124, 82, 0.4);
+}
+
+.bookRow__item-button--delete {
+    background: linear-gradient(135deg, rgba(160, 82, 45, 0.35) 0%, rgba(139, 69, 19, 0.35) 100%);
+    border-color: rgba(160, 82, 45, 0.6);
+}
+
+.bookRow__item-button--delete:hover {
+    background: linear-gradient(135deg, rgba(160, 82, 45, 0.5) 0%, rgba(139, 69, 19, 0.5) 100%);
+    border-color: rgba(160, 82, 45, 0.9);
+    box-shadow: 0 4px 16px rgba(160, 82, 45, 0.4);
+}
+
+/* =========================
+   ITEM INFO
+========================= */
+
+.bookRow__item-info {
+    margin-top: 12px;
+}
+
+.bookRow__item-title {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #FAF8F3;
+    line-height: 1.4;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.bookRow__item-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    flex-wrap: wrap;
+}
+
+.bookRow__item-match {
+    color: #D4A76A;
+    font-weight: 700;
+    text-shadow: 0 0 8px rgba(212, 167, 106, 0.5);
+}
+
+.bookRow__item-age,
+.bookRow__item-quality {
+    border: 1px solid rgba(212, 167, 106, 0.6);
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-weight: 500;
+    background: rgba(166, 124, 82, 0.2);
+    color: #E8DCC8;
+}
+
+.bookRow__item-duration {
+    color: #FAF8F3;
+    opacity: 0.95;
+}
+
+.bookRow__item-genres {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    font-size: 11px;
+    color: #E8DCC8;
+    margin-top: 6px;
+}
+
+.bookRow__item-description {
+    font-size: 12px;
+    line-height: 1.5;
+    color: #FAF8F3;
+    opacity: 0.92;
+    margin-top: 10px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* =========================
+   CREATE BOOK BUTTON
+========================= */
+
+.bookRow__item--create {
+    background: linear-gradient(135deg, #3E3A32 0%, #2E2A22 100%);
+    border: 3px dashed rgba(212, 167, 106, 0.4);
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.bookRow__item--create:hover {
+    background: linear-gradient(135deg, #4A4540 0%, #3E3A32 100%);
+    border-color: rgba(212, 167, 106, 0.7);
+    transform: scale(1.08);
+    box-shadow: 0 6px 20px rgba(212, 167, 106, 0.2);
+}
+
+.bookRow__create-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    color: #D4A76A;
+}
+
+.bookRow__create-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(212, 167, 106, 0.25) 0%, rgba(166, 124, 82, 0.25) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    border: 2px solid rgba(212, 167, 106, 0.3);
+}
+
+.bookRow__item--create:hover .bookRow__create-icon {
+    background: linear-gradient(135deg, rgba(212, 167, 106, 0.4) 0%, rgba(180, 140, 80, 0.4) 100%);
+    transform: scale(1.15) rotate(90deg);
+    border-color: rgba(212, 167, 106, 0.5);
+    box-shadow: 0 0 16px rgba(212, 167, 106, 0.4);
+}
+
+.bookRow__create-text {
+    font-size: 15px;
+    font-weight: 600;
+    text-align: center;
+    letter-spacing: 0.3px;
+}
+
+/* =========================
+   NAVIGATION ARROWS
+========================= */
+
+.bookRow__nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 65px;
+    height: 100%;
+    background: linear-gradient(
+        to right,
+        rgba(101, 67, 33, 0.85) 0%,
+        rgba(101, 67, 33, 0.5) 50%,
+        rgba(101, 67, 33, 0) 100%
+    );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 5;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0;
+}
+
+.bookRow__listarea:hover .bookRow__nav {
+    opacity: 1;
+}
+
+.bookRow__nav:hover {
+    background: linear-gradient(
+        to right,
+        rgba(125, 90, 58, 0.95) 0%,
+        rgba(125, 90, 58, 0.7) 50%,
+        rgba(125, 90, 58, 0.1) 100%
+    );
+}
+
+.bookRow__nav--left {
+    left: 0;
+    border-radius: 0 10px 10px 0;
+}
+
+.bookRow__nav--right {
+    right: 0;
+    background: linear-gradient(
+        to left,
+        rgba(101, 67, 33, 0.85) 0%,
+        rgba(101, 67, 33, 0.5) 50%,
+        rgba(101, 67, 33, 0) 100%
+    );
+    border-radius: 10px 0 0 10px;
+}
+
+.bookRow__nav--right:hover {
+    background: linear-gradient(
+        to left,
+        rgba(125, 90, 58, 0.95) 0%,
+        rgba(125, 90, 58, 0.7) 50%,
+        rgba(125, 90, 58, 0.1) 100%
+    );
+}
+
+.bookRow__nav svg {
+    filter: drop-shadow(2px 2px 6px rgba(0, 0, 0, 0.6));
+    transition: transform 0.3s ease;
+    color: #FFFBF5;
+}
+
+.bookRow__nav:hover svg {
+    transform: scale(1.25);
+}
+
+/* =========================
+   RESPONSIVE DESIGN
+========================= */
+
+@media (max-width: 1024px) {
+    .bookRow__item:hover {
+        transform: scale(1.12);
+    }
+    
+    .bookRow__item-hover {
+        padding: 18px;
+    }
+    
+    .bookRow__item-button {
+        width: 42px;
+        height: 42px;
+    }
+}
+
+@media (max-width: 768px) {
+    .bookRow {
+        margin-bottom: 45px;
+    }
+    
+    .bookRow__header {
+        padding: 0 3%;
+        margin-bottom: 20px;
+    }
+    
+    .bookRow__title {
+        font-size: 1.4rem;
+    }
+    
+    .bookRow__controls {
+        gap: 14px;
+    }
+    
+    .bookRow__control-btn {
+        width: 36px;
+        height: 36px;
+    }
+    
+    .bookRow__progress {
+        width: 90px;
+    }
+    
+    .bookRow__list {
+        padding: 0 3%;
+        gap: 12px;
+    }
+    
+    .bookRow__item:hover {
+        transform: scale(1.1);
+    }
+    
+    .bookRow__item-hover {
+        padding: 14px;
+    }
+    
+    .bookRow__item-button {
+        width: 38px;
+        height: 38px;
+    }
+    
+    .bookRow__item-title {
+        font-size: 14px;
+    }
+    
+    .bookRow__item-meta {
+        font-size: 12px;
+    }
+    
+    .bookRow__item-description {
+        font-size: 11px;
+    }
+    
+    .bookRow__nav {
+        width: 55px;
+    }
+
+    /* Create button responsive */
+    .bookRow__create-icon {
+        width: 54px;
+        height: 54px;
+    }
+    
+    .bookRow__create-icon svg {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .bookRow__create-text {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 480px) {
+    .bookRow {
+        margin-bottom: 40px;
+    }
+
+    .bookRow__header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 0 2%;
+    }
+    
+    .bookRow__title {
+        font-size: 1.25rem;
+    }
+    
+    .bookRow__list {
+        padding: 0 2%;
+        gap: 10px;
+    }
+    
+    .bookRow__item:hover {
+        transform: scale(1.08);
+    }
+    
+    .bookRow__item-hover {
+        padding: 12px;
+    }
+    
+    .bookRow__item-button {
+        width: 34px;
+        height: 34px;
+    }
+    
+    .bookRow__item-button svg {
+        width: 18px;
+        height: 18px;
+    }
+    
+    .bookRow__item-title {
+        font-size: 13px;
+    }
+    
+    .bookRow__item-meta {
+        font-size: 11px;
+        gap: 7px;
+    }
+    
+    .bookRow__item-genres {
+        font-size: 10px;
+    }
+    
+    .bookRow__item-description {
+        font-size: 10px;
+        -webkit-line-clamp: 2;
+    }
+    
+    .bookRow__nav {
+        width: 45px;
+    }
+    
+    .bookRow__nav svg {
+        width: 26px;
+        height: 26px;
+    }
+
+    /* Create button mobile */
+    .bookRow__create-icon {
+        width: 44px;
+        height: 44px;
+    }
+    
+    .bookRow__create-icon svg {
+        width: 26px;
+        height: 26px;
+    }
+    
+    .bookRow__create-text {
+        font-size: 12px;
+    }
+}
+
+/* =========================
+   ACCESSIBILITY
+========================= */
+
+@media (prefers-reduced-motion: reduce) {
+    .bookRow__list,
+    .bookRow__item,
+    .bookRow__item-hover,
+    .bookRow__item-button,
+    .bookRow__nav,
+    .bookRow__progress-bar,
+    .bookRow__create-icon {
+        transition: none !important;
+    }
+    
+    .bookRow__skeleton {
+        animation: none;
+    }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+    .bookRow__item-button {
+        border: 3px solid #FAF8F3;
+    }
+    
+    .bookRow__item-age,
+    .bookRow__item-quality {
+        border: 2px solid #FAF8F3;
+    }
+
+    .bookRow__item--create {
+        border-width: 4px;
+    }
+}

@@ -1,0 +1,173 @@
+/* =========================
+   GLOBAL RESET
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* =========================
+   BODY & HTML
+========================= */
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    background: linear-gradient(135deg, rgba(20, 20, 20, 0.95) 0%, rgba(30, 25, 20, 0.95) 100%);
+    color: #E8DCC8;
+    overflow-x: hidden;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* =========================
+   APP CONTAINER
+========================= */
+
+.app {
+    min-height: 100vh;
+    background: linear-gradient(135deg, rgba(20, 20, 20, 0.95) 0%, rgba(30, 25, 20, 0.95) 100%);
+}
+
+/* =========================
+   BUTTONS & INTERACTIVE ELEMENTS
+========================= */
+
+button {
+    cursor: pointer;
+    border: none;
+    background: none;
+    outline: none;
+    font-family: inherit;
+}
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.3s ease;
+}
+
+a:focus,
+button:focus {
+    outline: 2px solid #A67C52;
+    outline-offset: 2px;
+}
+
+/* =========================
+   IMAGES
+========================= */
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* =========================
+   SELECTION
+========================= */
+
+::selection {
+    background-color: #D4A76A;
+    color: #FFFBF5;
+}
+
+::-moz-selection {
+    background-color: #D4A76A;
+    color: #FFFBF5;
+}
+
+/* =========================
+   SCROLLBAR
+========================= */
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(166, 124, 82, 0.2);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #D4A76A 0%, #A6764F 100%);
+    border-radius: 5px;
+    border: 2px solid rgba(212, 167, 106, 0.3);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #A6764F 0%, #8B5A2B 100%);
+}
+
+::-webkit-scrollbar-corner {
+    background: rgba(166, 124, 82, 0.2);
+}
+
+/* Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #D4A76A rgba(166, 124, 82, 0.2);
+}
+
+/* =========================
+   UTILITY CLASSES
+========================= */
+
+.container {
+    max-width: 1920px;
+    margin: 0 auto;
+    padding: 0 4%;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+/* =========================
+   CONTENT CONTAINER
+========================= */
+
+.content {
+    margin-top: 80px;
+    padding: 0;
+}
+
+/* =========================
+   TRANSITIONS
+========================= */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}

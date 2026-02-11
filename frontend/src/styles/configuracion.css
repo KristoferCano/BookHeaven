@@ -1,0 +1,69 @@
+/* Estilos para Configuración */
+
+.config-wrapper {
+  min-height: 80vh;
+  padding: 32px 20px;
+  background: linear-gradient(180deg, #0f0f0f 0%, #161412 100%);
+  color: #fff;
+}
+
+.config-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.config-tabs {
+  display: flex;
+  gap: 8px;
+  margin: 12px 0 18px 0;
+}
+
+.config-tabs button {
+  background: transparent;
+  color: #ddd;
+  border: 1px solid rgba(255,255,255,0.03);
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.config-tabs button.active {
+  background: linear-gradient(135deg,#D4A76A,#A6764F);
+  color: #111;
+  border: none;
+}
+
+.config-panel {
+  background: #141414;
+  padding: 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(212,167,106,0.06);
+}
+
+.config-panel label {
+  display: block;
+  margin-top: 12px;
+  color: #cfc6b8;
+}
+
+.config-panel input, .config-panel select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 6px;
+  border-radius: 6px;
+  background: #0f0f0f;
+  color: #fff;
+  border: 1px solid #222;
+}
+
+.config-actions { margin-top: 16px }
+
+.config-msg {
+  margin: 12px 0;
+  padding: 10px 12px;
+  background: rgba(212,167,106,0.12);
+  color: #E8DCC8;
+  border-radius: 8px;
+}
+
+.help { color: #bfbfbf; font-size: 13px }
