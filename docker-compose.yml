@@ -1,24 +1,24 @@
 version: '3.8'
 
 services:
-  # PostgreSQL Database
+  # MySQL Database (Local Development)
   db:
-    image: postgres:16-alpine
-    container_name: bookheaven_postgres
+    image: mysql:8.0
+    container_name: bookheaven_mysql
     restart: unless-stopped
     environment:
-      POSTGRES_DB: ${DB_DATABASE:-bookheaven}
-      POSTGRES_USER: ${DB_USERNAME:-bookheaven}
-      POSTGRES_PASSWORD: ${DB_PASSWORD:-changeme}
-      PGDATA: /var/lib/postgresql/data/pgdata
+      MYSQL_DATABASE: ${DB_DATABASE:-bookheaven2}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-root}
+      MYSQL_USER: ${DB_USERNAME:-bookheaven}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-changeme}
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - db_data:/var/lib/mysql
     ports:
-      - "${DB_PORT:-5432}:5432"
+      - "${DB_PORT:-3306}:3306"
     networks:
       - bookheaven_network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-bookheaven}"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -32,37 +32,40 @@ services:
     restart: unless-stopped
     working_dir: /var/www/html
     environment:
-      APP_NAME: ${APP_NAME:-BookHeaven}
-      APP_ENV: ${APP_ENV:-local}
-      APP_KEY: ${APP_KEY:-}
-      APP_DEBUG: ${APP_DEBUG:-true}
-      APP_URL: ${APP_URL:-http://localhost:8000}
+      APP_NAME: BookHeaven
+      APP_ENV: local
+      APP_KEY: ${APP_KEY:-base64:8oM+Dw3kiVIdy2aulUQ3vENzUEJvxjalKExx39HqYDw=}
+      APP_DEBUG: "true"
+      APP_URL: http://localhost:9000
       
-      DB_CONNECTION: pgsql
+      DB_CONNECTION: mysql
       DB_HOST: db
-      DB_PORT: 5432
-      DB_DATABASE: ${DB_DATABASE:-bookheaven}
+      DB_PORT: 3306
+      DB_DATABASE: ${DB_DATABASE:-bookheaven2}
       DB_USERNAME: ${DB_USERNAME:-bookheaven}
       DB_PASSWORD: ${DB_PASSWORD:-changeme}
       
       SESSION_DRIVER: database
-      CACHE_STORE: database
+      CACHE_STORE: file
       QUEUE_CONNECTION: database
       
-      MAIL_MAILER: ${MAIL_MAILER:-log}
-      MAIL_HOST: ${MAIL_HOST:-127.0.0.1}
-      MAIL_PORT: ${MAIL_PORT:-2525}
-      MAIL_USERNAME: ${MAIL_USERNAME:-}
-      MAIL_PASSWORD: ${MAIL_PASSWORD:-}
-      MAIL_FROM_ADDRESS: ${MAIL_FROM_ADDRESS:-hello@example.com}
+      MAIL_MAILER: smtp
+      MAIL_HOST: ${MAIL_HOST:-smtp.gmail.com}
+      MAIL_PORT: ${MAIL_PORT:-587}
+      MAIL_USERNAME: ${MAIL_USERNAME:-zcripta@gmail.com}
+      MAIL_PASSWORD: ${MAIL_PASSWORD:-sgcm dkkj zxsz vqbu}
+      MAIL_FROM_ADDRESS: ${MAIL_FROM_ADDRESS:-zcripta@gmail.com}
+      MAIL_FROM_NAME: BookHeaven
+      MAIL_ENCRYPTION: tls
       
-      SANCTUM_STATEFUL_DOMAINS: localhost,127.0.0.1,${APP_DOMAIN:-localhost:3000}
+      FRONTEND_URL: http://localhost:5173
+      SANCTUM_STATEFUL_DOMAINS: localhost:5173,localhost:5174,localhost:5175
     volumes:
       - ./backend:/var/www/html
       - backend_storage:/var/www/html/storage
       - backend_bootstrap:/var/www/html/bootstrap/cache
     ports:
-      - "8000:80"
+      - "9000:80"
     depends_on:
       db:
         condition: service_healthy
@@ -73,9 +76,9 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 5s
+      start_period: 10s
 
-  # Frontend (optional, for local development)
+  # React Frontend
   frontend:
     build:
       context: ./frontend
@@ -83,14 +86,13 @@ services:
     container_name: bookheaven_frontend
     restart: unless-stopped
     ports:
-      - "3000:3000"
+      - "80:80"
     depends_on:
       - backend
     networks:
       - bookheaven_network
     environment:
-      VITE_API_URL: http://backend:8000/api
-      BACKEND_URL: http://backend:8000
+      VITE_API_URL: http://localhost:9000
 
 volumes:
   db_data:
@@ -98,6 +100,12 @@ volumes:
   backend_storage:
     driver: local
   backend_bootstrap:
+    driver: local
+
+networks:
+  bookheaven_network:
+    driver: bridge
+
     driver: local
 
 networks:
