@@ -45,13 +45,9 @@ RUN apt-get update && apt-get install -y \
     postgresql-client \
     && rm -rf /var/lib/apt/lists/*
 
-# Install PHP extensions
-RUN docker-php-ext-install -j$(nproc) \
-    pdo \
-    pdo_pgsql \
-    pdo_mysql \
-    zip \
-    bcmath
+# Copy PHP extensions from builder
+COPY --from=builder /usr/local/etc/php/conf.d /usr/local/etc/php/conf.d
+COPY --from=builder /usr/local/lib/php/extensions /usr/local/lib/php/extensions
 
 # Create app directory
 WORKDIR /var/www/html
