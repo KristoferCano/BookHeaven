@@ -1,5 +1,5 @@
 services:
-  # PostgreSQL Database
+  # PostgreSQL Database (Local Development)
   db:
     image: postgres:16-alpine
     container_name: bookheaven_postgres
