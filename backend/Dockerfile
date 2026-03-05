@@ -11,17 +11,12 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Install PHP extensions
-RUN docker-php-ext-install \
+RUN docker-php-ext-install -j$(nproc) \
     pdo \
     pdo_pgsql \
     pdo_mysql \
     zip \
-    bcmath \
-    ctype \
-    fileinfo \
-    json \
-    mbstring \
-    tokenizer
+    bcmath
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -51,17 +46,12 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Install PHP extensions
-RUN docker-php-ext-install \
+RUN docker-php-ext-install -j$(nproc) \
     pdo \
     pdo_pgsql \
     pdo_mysql \
     zip \
-    bcmath \
-    ctype \
-    fileinfo \
-    json \
-    mbstring \
-    tokenizer
+    bcmath
 
 # Create app directory
 WORKDIR /var/www/html
