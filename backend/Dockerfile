@@ -75,10 +75,34 @@ RUN mkdir -p /var/log/supervisor
 RUN echo '#!/bin/bash\n\
 set -e\n\
 \n\
-# Generar .env si no existe\n\
+# Crear .env con variables de entorno de Render\n\
 if [ ! -f .env ]; then\n\
-    echo "Generating .env file..."\n\
-    cp .env.example .env || echo "APP_NAME=Laravel" > .env\n\
+    cat > .env << EOF\n\
+APP_NAME=Laravel\n\
+APP_ENV=${APP_ENV:-production}\n\
+APP_KEY=${APP_KEY}\n\
+APP_DEBUG=${APP_DEBUG:-false}\n\
+APP_URL=${APP_URL}\n\
+DB_CONNECTION=${DB_CONNECTION:-pgsql}\n\
+DB_HOST=${DB_HOST}\n\
+DB_PORT=${DB_PORT:-5432}\n\
+DB_DATABASE=${DB_DATABASE}\n\
+DB_USERNAME=${DB_USERNAME}\n\
+DB_PASSWORD=${DB_PASSWORD}\n\
+DB_SSLMODE=${DB_SSLMODE:-require}\n\
+MAIL_MAILER=${MAIL_MAILER:-smtp}\n\
+MAIL_HOST=${MAIL_HOST}\n\
+MAIL_PORT=${MAIL_PORT}\n\
+MAIL_USERNAME=${MAIL_USERNAME}\n\
+MAIL_PASSWORD=${MAIL_PASSWORD}\n\
+MAIL_ENCRYPTION=${MAIL_ENCRYPTION}\n\
+MAIL_FROM_ADDRESS=${MAIL_FROM_ADDRESS}\n\
+FRONTEND_URL=${FRONTEND_URL}\n\
+SANCTUM_STATEFUL_DOMAINS=${SANCTUM_STATEFUL_DOMAINS}\n\
+QUEUE_CONNECTION=database\n\
+SESSION_DRIVER=database\n\
+EOF\n\
+    echo ".env file created"\n\
 fi\n\
 \n\
 # Esperar a que la BD esté lista (solo en Render)\n\
@@ -94,10 +118,9 @@ if [ ! -z "$DB_HOST" ] && [ "$DB_HOST" != "127.0.0.1" ]; then\n\
     done\n\
 fi\n\
 \n\
-# Clear caché y generar key\n\
+# Clear caché\n\
 php artisan config:clear || true\n\
 php artisan cache:clear || true\n\
-php artisan key:generate --force || true\n\
 \n\
 # Ejecutar migraciones\n\
 echo "Running migrations..."\n\
