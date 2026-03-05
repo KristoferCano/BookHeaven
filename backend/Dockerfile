@@ -43,6 +43,7 @@ RUN apt-get update && apt-get install -y \
     supervisor \
     curl \
     postgresql-client \
+    netcat-openbsd \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy PHP extensions from builder
