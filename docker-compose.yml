@@ -76,21 +76,21 @@ services:
       start_period: 5s
 
   # Frontend (optional, for local development)
-  # frontend:
-  #   build:
-  #     context: ./frontend
-  #     dockerfile: Dockerfile
-  #   container_name: bookheaven_frontend
-  #   restart: unless-stopped
-  #   ports:
-  #     - "3000:5173"
-  #   depends_on:
-  #     - backend
-  #   networks:
-  #     - bookheaven_network
-  #   environment:
-  #     VITE_API_URL: http://backend:8000/api
-  #     BACKEND_URL: http://backend:8000
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: bookheaven_frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - bookheaven_network
+    environment:
+      VITE_API_URL: http://backend:8000/api
+      BACKEND_URL: http://backend:8000
 
 volumes:
   db_data:
