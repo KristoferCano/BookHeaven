@@ -39,6 +39,7 @@ FROM php:8.2-fpm
 # Install runtime dependencies
 RUN apt-get update && apt-get install -y \
     libpq5 \
+    libzip5 \
     nginx \
     supervisor \
     curl \
