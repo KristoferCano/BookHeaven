@@ -1,40 +1,28 @@
-# Stage 1: Build
+# -------- Stage 1: Build frontend --------
 FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-# Copy package files
 COPY package*.json ./
-
-# Install dependencies
 RUN npm install
 
-# Copy source code
 COPY . .
-
-# Build the application
 RUN npm run build
 
-# Stage 2: Production
-FROM node:20-alpine
 
-WORKDIR /app
+# -------- Stage 2: Production image --------
+FROM nginx:alpine
 
-# Install serve to run the built application
-RUN npm install -g serve
+WORKDIR /usr/share/nginx/html
 
-# Copy built files from builder
-COPY --from=builder /app/dist ./dist
+# Copy nginx config
+COPY nginx.conf /etc/nginx/nginx.conf
 
-# Copy package.json for reference
-COPY package.json .
+# Copy built React app
+COPY --from=builder /app/dist /usr/share/nginx/html
 
 # Expose port
-EXPOSE 3000
+EXPOSE 80
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-  CMD wget --quiet --tries=1 --spider http://localhost:3000 || exit 1
-
-# Start the application
-CMD ["serve", "-s", "dist", "-l", "3000"]
+# Start nginx
+CMD ["nginx", "-g", "daemon off;"]
