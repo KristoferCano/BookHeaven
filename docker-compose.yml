@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   # MySQL Database (Local Development)
   db:
@@ -81,8 +79,8 @@ services:
   # React Frontend
   frontend:
     build:
-      context: ./frontend
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./frontend/Dockerfile
     container_name: bookheaven_frontend
     restart: unless-stopped
     ports:
@@ -100,12 +98,6 @@ volumes:
   backend_storage:
     driver: local
   backend_bootstrap:
-    driver: local
-
-networks:
-  bookheaven_network:
-    driver: bridge
-
     driver: local
 
 networks:
