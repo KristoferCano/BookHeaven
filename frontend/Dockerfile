@@ -1,28 +1,42 @@
-# -------- Stage 1: Build frontend --------
+# Build stage - Node.js only (React + Vite)
 FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-COPY package*.json ./
-RUN npm install
+# Copy package files
+COPY package.json package-lock.json ./
 
+# Install dependencies
+RUN npm ci --only=production && npm cache clean --force
+
+# Copy source code
 COPY . .
+
+# Build the frontend
 RUN npm run build
 
+# Production stage - Nginx
+FROM nginx:1.27-alpine
 
-# -------- Stage 2: Production image --------
-FROM nginx:alpine
+# Remove default nginx config
+RUN rm /etc/nginx/conf.d/default.conf
 
-WORKDIR /usr/share/nginx/html
+# Copy custom nginx config
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Copy nginx config
-COPY nginx.conf /etc/nginx/nginx.conf
-
-# Copy built React app
+# Copy built app from builder
 COPY --from=builder /app/dist /usr/share/nginx/html
+
+# Set proper permissions
+RUN chown -R nginx:nginx /usr/share/nginx/html && \
+    chmod -R 755 /usr/share/nginx/html
 
 # Expose port
 EXPOSE 80
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD wget --quiet --tries=1 --spider http://localhost/ || exit 1
 
 # Start nginx
 CMD ["nginx", "-g", "daemon off;"]
