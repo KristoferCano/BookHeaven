@@ -39,12 +39,10 @@ FROM php:8.2-fpm
 # Install runtime dependencies
 RUN apt-get update && apt-get install -y \
     libpq5 \
-    libzip5 \
     nginx \
     supervisor \
     curl \
     postgresql-client \
-    netcat-openbsd \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy PHP extensions from builder
@@ -76,6 +74,12 @@ RUN mkdir -p /var/log/supervisor
 # Create entrypoint script
 RUN echo '#!/bin/bash\n\
 set -e\n\
+\n\
+# Generar .env si no existe\n\
+if [ ! -f .env ]; then\n\
+    echo "Generating .env file..."\n\
+    cp .env.example .env || echo "APP_NAME=Laravel" > .env\n\
+fi\n\
 \n\
 # Esperar a que la BD esté lista (solo en Render)\n\
 if [ ! -z "$DB_HOST" ] && [ "$DB_HOST" != "127.0.0.1" ]; then\n\
