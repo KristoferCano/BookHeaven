@@ -1,12 +1,6 @@
 {
-  "version": 2,
-  "name": "bookheaven-frontend",
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
-  "env": {
-    "VITE_API_URL": "@vite_api_url",
-    "BACKEND_URL": "@backend_url"
-  },
   "framework": "vite",
   "redirects": [
     {
@@ -16,27 +10,6 @@
     }
   ],
   "headers": [
-    {
-      "source": "/",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=3600, must-revalidate"
-        },
-        {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        },
-        {
-          "key": "X-Frame-Options",
-          "value": "SAMEORIGIN"
-        },
-        {
-          "key": "X-XSS-Protection",
-          "value": "1; mode=block"
-        }
-      ]
-    },
     {
       "source": "/js/:path*",
       "headers": [
@@ -76,17 +49,23 @@
           "value": "*"
         }
       ]
-    }
-  ],
-  "rewrites": [
-    {
-      "source": "/api/:path*",
-      "destination": "http://localhost:8000/api/:path*"
     },
     {
-      "source": "/storage/:path*",
-      "destination": "http://localhost:8000/storage/:path*"
+      "source": "/:path*",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        }
+      ]
     }
-  ],
-  "functions": {}
+  ]
 }
