@@ -1,22 +1,22 @@
 services:
-  # MySQL Database (Local Development)
+  # PostgreSQL Database
   db:
-    image: mysql:8.0
-    container_name: bookheaven_mysql
+    image: postgres:16-alpine
+    container_name: bookheaven_postgres
     restart: unless-stopped
     environment:
-      MYSQL_DATABASE: ${DB_DATABASE:-bookheaven2}
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-root}
-      MYSQL_USER: ${DB_USERNAME:-bookheaven}
-      MYSQL_PASSWORD: ${DB_PASSWORD:-changeme}
+      POSTGRES_DB: ${DB_DATABASE:-bookheaven}
+      POSTGRES_USER: ${DB_USERNAME:-bookheaven}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-changeme}
+      PGDATA: /var/lib/postgresql/data/pgdata
     volumes:
-      - db_data:/var/lib/mysql
+      - db_data:/var/lib/postgresql/data
     ports:
-      - "3307:3306"
+      - "5432:5432"
     networks:
       - bookheaven_network
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-bookheaven}"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -36,10 +36,10 @@ services:
       APP_DEBUG: "true"
       APP_URL: http://localhost:9000
       
-      DB_CONNECTION: mysql
+      DB_CONNECTION: pgsql
       DB_HOST: db
-      DB_PORT: 3306
-      DB_DATABASE: ${DB_DATABASE:-bookheaven2}
+      DB_PORT: 5432
+      DB_DATABASE: ${DB_DATABASE:-bookheaven}
       DB_USERNAME: ${DB_USERNAME:-bookheaven}
       DB_PASSWORD: ${DB_PASSWORD:-changeme}
       
